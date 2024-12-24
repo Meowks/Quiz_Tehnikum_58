@@ -1,10 +1,31 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "../components/ProgressBar";
 import Header from "../components/Header";
 import { AddLabel } from "../components/AddLabel";
 import { AddButton } from "../components/AddButton";
 
 const StepOne = () => {
+  const [answer, setAnswer] = useState("");
+  const [answerError, setAnswerError] = useState(false)
+  const [buttonError, setButtonError] = useState(true);
+
+
+  const hendleClick = (() => {
+    if (!answer) {
+      setAnswerError(true)
+    } else {
+      setAnswerError(false)
+    }
+  })
+
+  useEffect(() => {
+    if (!answer) {
+      setButtonError(true)
+    } else {
+      setButtonError(false)
+    }
+  });
+
   return (
     <div className="container">
       <div className="wrapper">
@@ -25,13 +46,17 @@ const StepOne = () => {
               labelType="text"
               labelName="answer"
               labelPlaceholder="Ваш ответ"
-              labelError="Введите номер в правильном формате например"
+              labelError="Введите ответ в правильном формате например"
+              inputValue={answer}
+              inputChange={setAnswer}
+              hasError={answerError}
             />
 
             <AddButton
               buttonText="Далее"
               buttonType="button"
-              isDisabled={true}
+              isDisabled={buttonError}
+              buttonClick={hendleClick}
             />
 
           </div>

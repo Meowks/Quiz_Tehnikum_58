@@ -6,9 +6,14 @@ export const AddLabel = ({
   labelName,
   labelPlaceholder,
   labelError,
+  inputValue,
+  inputChange,
+  hasError,
 }) => {
   return (
-    <label className="input-wrapper" htmlFor={labelName}>
+    <label className={`input-wrapper ${hasError && "_error"}`} 
+    htmlFor={labelName}
+    >
       {labelText}
       <input
         required
@@ -16,10 +21,10 @@ export const AddLabel = ({
         name={labelName}
         id={labelName}
         placeholder={labelPlaceholder}
+        value={inputValue}
+        onChange={(e) => inputChange(e.target.value)}
       />
-      <span id="error-message">
-        {labelError}
-      </span>
+      {hasError && <span id="error-message">{labelError}</span>}
     </label>
   );
 };
