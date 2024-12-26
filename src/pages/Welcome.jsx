@@ -2,18 +2,20 @@ import React, { useEffect, useState } from "react";
 import Header from "../components/Header";
 import { AddLabel } from "../components/AddLabel";
 import { AddButton } from "../components/AddButton";
+import { useNavigate } from "react-router-dom";
 
 const Welcome = () => {
   const RegexPhone = /^\+?\d{1,3}[-.\s]?\(?\d{1,4}\)?[-.\s]?\d{1,4}[-.\s]?\d{1,9}$/
   const RegexName = /^[a-zA-Zа-яА-ЯёЁ\s]+$/
   
-
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
 
   const [nameError, setNameError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
   const [buttonError, setButtonError] = useState(true);
+
+  const navigate = useNavigate()
 
   const handleClick = () => {
     if (!RegexName.test(name)) {
@@ -23,6 +25,7 @@ const Welcome = () => {
     } else {
       setNameError(false);
       setPhoneError(false);
+      navigate("/step-one")
     }
   };
 
@@ -33,8 +36,6 @@ const Welcome = () => {
       setButtonError(false)
     }
   }, [name, phone]);
-
-
 
   return (
     <div className="container">

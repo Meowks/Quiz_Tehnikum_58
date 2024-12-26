@@ -1,47 +1,61 @@
 import React from "react";
+import Header from "../components/Header";
+import { AnswerItems } from "../components/AnswerItems";
+import { ProgressBar } from "../components/ProgressBar";
+import { Link } from "react-router-dom";
 
 const StepTwo = () => {
+  const variants = [
+    {
+      id:"variant-1",
+      labelText:"Frontend"
+    },
+    {
+      id:"variant-2",
+      labelText:"Python"
+    },
+    {
+      id:"variant-3",
+      labelText:"Ux/Ix"
+    },
+    {
+      id:"variant-4",
+      labelText:"Fullstack"
+    },
+  ]
+
   return (
     <div className="container">
       <div className="wrapper">
         <div className="variants-quiz">
-          <div className="indicator">
-            <div className="indicator__text">
-              <span className="indicator__description">
-                Скидка за прохождение опроса:
-              </span>
-              <span className="indicator__value">15%</span>
-            </div>
-            <div className="indicator__progressbar">
-              <div className="indicator__unit indicator__unit-1 _active"></div>
-              <div className="indicator__unit indicator__unit-2"></div>
-              <div className="indicator__unit indicator__unit-3"></div>
-              <div className="indicator__unit indicator__unit-4"></div>
-            </div>
-          </div>
+          
+          <ProgressBar
+            progressBarText="Скидка за прохождение опроса:"
+            progressBarPercent="15%"
+            currentStep={1}
+          />
+
           <div className="question">
-            <h2>1. Занимательный вопрос</h2>
+
+            <Header headerText={"Выберите курс"} textType={"h2"}/>
+
             <ul className="variants">
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant-1" id="variant-1" />
-                <label htmlFor="variant-1">Ваш ответ</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant-2" id="variant-2" />
-                <label htmlFor="variant-2">Ваш ответ</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant-3" id="variant-3" />
-                <label htmlFor="variant-3">Ваш ответ</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant-4" id="variant-4" />
-                <label htmlFor="variant-4">Ваш ответ</label>
-              </li>
+              {variants.map((elem)=>{
+                return(
+                  <AnswerItems 
+                  key={elem.id} 
+                  answerText={elem.labelText} 
+                  answerVariants={elem.id}
+                  />
+                )
+              })}
+
             </ul>
-            <button type="button" disabled id="next-btn">
+            <Link to="/step-three">
+            <button type="button"  id="next-btn">
               Далее
             </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -1,20 +1,20 @@
 import React from "react";
 
-export const ProgressBar = ({ProgressBarText, ProgressBarPercent}) => {
+export const ProgressBar = ({ progressBarText, progressBarPercent, currentStep }) => {
+  const variable = [1, 2, 3, 4]
+
   return (
     <div className="indicator">
       <div className="indicator__text">
         <span className="indicator__description">
-          {ProgressBarText}
+          {progressBarText}
         </span>
-        <span className="indicator__value">{ProgressBarPercent}</span>
+        <span className="indicator__value">{progressBarPercent}</span>
       </div>
-
       <div className="indicator__progressbar">
-        <div className="indicator__unit indicator__unit-1"></div>
-        <div className="indicator__unit indicator__unit-2"></div>
-        <div className="indicator__unit indicator__unit-3"></div>
-        <div className="indicator__unit indicator__unit-4"></div>
+      {variable.map((e, i) => (
+        <div key={i} className={`indicator__unit indicator__unit-${e} ${currentStep>i && "_active"}`}></div>
+      ))}
       </div>
     </div>
   )
