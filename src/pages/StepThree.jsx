@@ -1,7 +1,29 @@
 import React from "react";
 import { ProgressBar } from "../components/ProgressBar";
+import Header from "../components/Header";
+import { AddInputPic } from "../components/AddInputPic";
+import { AddButton } from "../components/AddButton";
+import { Link } from "react-router-dom";
 
 const StepThree = () => {
+  const icons = [
+    {
+      src: "./img/laugh.png",
+      alt: "laugh"
+    },
+    {
+      src: "./img/hearts.png",
+      alt: "hearts"
+    },
+    {
+      src: "./img/smirk.png",
+      alt: "smirk"
+    },
+    {
+      src: "./img/fright.png",
+      alt: "fright"
+    },
+  ]
   return (
     <div className="container">
       <div className="wrapper">
@@ -14,40 +36,29 @@ const StepThree = () => {
           />
 
           <div className="question">
-            <h2>3. Занимательный вопрос</h2>
+            <Header headerText={"3. Занимательный вопрос"} textType={"h2"} />
+
             <ul className="emoji-variants">
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-1" />
-                <label htmlFor="variant-1">
-                  <img src="./img/laugh.png" alt="laugh" />
-                  <p>Ваш ответ 1</p>
-                </label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-2" />
-                <label htmlFor="variant-2">
-                  <img src="./img/hearts.png" alt="hearts" />
-                  <p>Ваш ответ 2</p>
-                </label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-3" />
-                <label htmlFor="variant-3">
-                  <img src="./img/smirk.png" alt="smirk" />
-                  <p>Ваш ответ 3</p>
-                </label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-4" />
-                <label htmlFor="variant-4">
-                  <img src="./img/fright.png" alt="fright" />
-                  <p>Ваш ответ 4</p>
-                </label>
-              </li>
+              {icons.map((elem, i) => (
+                <AddInputPic
+                  key={i}
+                  inputType="radio"
+                  inputName="variant"
+                  inputId={`variant-${i + 1}`}
+                  labelPic={elem.src}
+                  labelPicAlt={elem.alt}
+                  labelText={`Ваш ответ ${i + 1}`}
+                />
+              ))}
             </ul>
-            <button type="button" disabled id="next-btn">
-              Далее
-            </button>
+            <Link to="/step-four">
+              <AddButton
+                // buttonClick={x}
+                buttonType="button"
+                isDisabled={false}
+                buttonText="Далее"
+              />
+            </Link>
           </div>
         </div>
       </div>
