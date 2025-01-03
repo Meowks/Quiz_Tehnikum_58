@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import { AnswerItems } from "../components/AnswerItems";
 import { ProgressBar } from "../components/ProgressBar";
@@ -25,6 +25,19 @@ const StepTwo = () => {
     },
   ]
 
+  const [checkedAnswer, setCheckedAnswer] = useState("")
+  const [buttonError, setButtonError] = useState(true)
+
+  useEffect(() => {
+    const userInfo = {...JSON.parse(localStorage.getItem("userInfo")),checkedAnswer}
+    localStorage.setItem("userInfo",JSON.stringify(userInfo))
+    if(!checkedAnswer){
+      setButtonError(true)
+    }else{
+      setButtonError(false)
+    }
+  }, [checkedAnswer])
+
   return (
     <div className="container">
       <div className="wrapper">
@@ -33,7 +46,7 @@ const StepTwo = () => {
           <ProgressBar
             progressBarText="Скидка за прохождение опроса:"
             progressBarPercent="15%"
-            currentStep={1} 
+            currentStep={1}
           />
 
           <div className="question">
@@ -47,6 +60,8 @@ const StepTwo = () => {
                     key={elem.id}
                     answerText={elem.labelText}
                     answerVariants={elem.id}
+                    onChange={() => { setCheckedAnswer(elem.labelText) }}
+                    checked={checkedAnswer === elem.labelText}
                   />
                 )
               })}
@@ -54,9 +69,9 @@ const StepTwo = () => {
             </ul>
             <Link to="/step-three">
               <AddButton
-                // buttonClick={x}
+                //buttonClick={x}
                 buttonType="button"
-                isDisabled={false}
+                isDisabled={buttonError}
                 buttonText="Далее"
               />
             </Link>

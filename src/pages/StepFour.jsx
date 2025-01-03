@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "../components/ProgressBar";
+import Header from "../components/Header";
+import { AnswerItems } from "../components/AnswerItems";
+import { AddButton } from "../components/AddButton";
+import { useNavigate } from "react-router-dom";
 
 const StepFour = () => {
+  const navigate = useNavigate()
+  const [checkVariants, setCheckVarisnts] = useState()
+
+  const variants = [1, 2, 3, 4, 5]
+  const course = JSON.parse(localStorage.getItem("userInfo"))
+  
+  useEffect(()=>{
+    const userInfo = {...JSON.parse(localStorage.getItem("userInfo")),checkVariants};
+    localStorage.setItem("userInfo",JSON.stringify(userInfo))
+  },[checkVariants])
   return (
     <div className="container">
       <div className="wrapper">
@@ -14,32 +28,27 @@ const StepFour = () => {
           />
 
           <div className="question">
-            <h2>4. Занимательный вопрос</h2>
+            <Header headerText={`Как хорошо вы знаете ${course.checkedAnswer}`} textType="h2" />
+
+
             <ul className="level-variants">
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-1" />
-                <label htmlFor="variant-1">1</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-2" />
-                <label htmlFor="variant-2">2</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-3" />
-                <label htmlFor="variant-3">3</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-4" />
-                <label htmlFor="variant-4">4</label>
-              </li>
-              <li className="variant-wrapper">
-                <input required type="radio" name="variant" id="variant-5" />
-                <label htmlFor="variant-5">5</label>
-              </li>
+              {
+                variants.map((elem, index) =>
+                  <AnswerItems
+                    answerText={elem}
+                    answerVariants={`variant-${index + 1}`}
+                    key={index}
+                    onChange={()=>setCheckVarisnts(elem)}
+                  />)
+              }
+
             </ul>
-            <button type="button" id="next-btn" disabled>
-              Далее
-            </button>
+            <AddButton
+              buttonText="Далее"
+              isDisabled={!checkVariants}
+              buttonType="button"
+              buttonClick={()=>navigate("/thanks")}
+            />
           </div>
         </div>
       </div>

@@ -4,14 +4,15 @@ export const AddButton = ({
   buttonText,
   buttonType,
   isDisabled,
-  buttonClick
+  buttonClick,
+  buttonId="next-btn",
 }) => {
   return (
     <button
       disabled={isDisabled}
       type={buttonType}
       onClick={buttonClick}
-      id="next-btn"
+      id={buttonId}
     >
       {buttonText}
     </button>

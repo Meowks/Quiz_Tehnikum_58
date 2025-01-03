@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { ProgressBar } from "../components/ProgressBar";
 import Header from "../components/Header";
+import { ProgressBar } from "../components/ProgressBar";
 import { AddLabel } from "../components/AddLabel";
 import { AddButton } from "../components/AddButton";
 import { useNavigate } from "react-router-dom";
@@ -11,19 +11,22 @@ const StepOne = () => {
   const [buttonError, setButtonError] = useState(true);
 
   const navigate = useNavigate()
-
+  
   const hendleClick = (() => {
     if (!answer) {
       setAnswerError(true)
     } else {
       setAnswerError(false)
+      navigate("/step-two")
+      const userInfo = {...JSON.parse(localStorage.getItem("userInfo")),answer}
+      localStorage.setItem("userInfo",JSON.stringify(userInfo))
     }
   })
 
   useEffect(() => {
     if (!answer) {
       setButtonError(true)
-      navigate("/step-two")
+      
     } else {
       setButtonError(false)
     }
@@ -42,7 +45,7 @@ const StepOne = () => {
 
           <div className="question">
             <Header
-              headerText="1. Занимательный вопрос"
+              headerText="Откуда вы о нас узнали?"
               textType="h2"
             />
 

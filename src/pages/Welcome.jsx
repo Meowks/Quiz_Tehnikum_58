@@ -26,6 +26,7 @@ const Welcome = () => {
       setNameError(false);
       setPhoneError(false);
       navigate("/step-one")
+      localStorage.setItem("userInfo",JSON.stringify({name,phone}))
     }
   };
 
@@ -69,6 +70,7 @@ const Welcome = () => {
               buttonText="Далее"
               buttonType="button"
               isDisabled={buttonError}
+              
             />
 
           </form>

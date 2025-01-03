@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { ProgressBar } from "../components/ProgressBar";
 import Header from "../components/Header";
 import { AddInputPic } from "../components/AddInputPic";
@@ -24,6 +24,24 @@ const StepThree = () => {
       alt: "fright"
     },
   ]
+
+  const [emoji, setEmoji] = useState("")
+  const [buttonError, setButtonError] = useState(true)
+
+  useEffect(() => {
+    if (emoji) {
+      try {
+        const userInfo = JSON.parse(localStorage.getItem("userInfo")) || {};
+        userInfo.emoji = emoji;
+        localStorage.setItem("userInfo", JSON.stringify(userInfo));
+        setButtonError(false);
+      } catch (error) {
+        console.error("Ошибка при работе с localStorage:", error);
+      }
+    } else {
+      setButtonError(true);
+    }
+  }, [emoji]);
   return (
     <div className="container">
       <div className="wrapper">
@@ -48,15 +66,20 @@ const StepThree = () => {
                   labelPic={elem.src}
                   labelPicAlt={elem.alt}
                   labelText={`Ваш ответ ${i + 1}`}
+                  inputChange={setEmoji}
+                  inputValue={emoji}
+                  onChange={() => { setEmoji(elem.alt) }}
+                  checked={emoji === elem.alt}
                 />
               ))}
             </ul>
             <Link to="/step-four">
               <AddButton
-                // buttonClick={x}
+                //buttonClick={}
                 buttonType="button"
-                isDisabled={false}
+                isDisabled={buttonError}
                 buttonText="Далее"
+
               />
             </Link>
           </div>
