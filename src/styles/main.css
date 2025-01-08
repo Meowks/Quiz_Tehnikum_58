@@ -46,6 +46,9 @@ a {
   align-items: center;
   justify-content: center;
 }
+.container._dark{
+  background-color: #22222a;
+}
 
 .wrapper {
   width: 338px;
